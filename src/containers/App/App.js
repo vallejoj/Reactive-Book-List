@@ -11,7 +11,7 @@ class App extends Component {
     super()
     this.state={
       books:[],
-      // searchBooks = ""
+      bookFilter : ''
     }
   }
 
@@ -24,6 +24,7 @@ class App extends Component {
       console.log(books)
     })
   }
+
 addBook(books){
   addBookToFakeXHR(books)
   .then(books =>{
@@ -32,7 +33,12 @@ addBook(books){
     })
   })
 }
+handleFilterInputChange(e){
+  this.setState({
+    bookFilter:e.target.value
+  })
 
+}
 
   render() {
     return (
@@ -40,12 +46,14 @@ addBook(books){
         <div className="App-header">
           <img src= "https://maxcdn.icons8.com/Share/icon/Printing//book1600.png"className="App-logo" alt="Books" />
           <h1>Welcome to the Bookdome</h1>
-
+              <BookFilterInput filterInputChange = {this.handleFilterInputChange.bind(this)}/>
         </div>
           <NewBookForm addBook = {this.addBook.bind(this)}/>
         <Book
+          filter= {this.state.bookFilter}
         books={this.state.books}
       />
+
       </div>
     );
   }
