@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Book from '../../components/Book'
 import BookFilterInput from '../../components/BookFilterInput'
-import BookList from '../../components/BookList'
+
 import {getBooksFromFakeXHR,addBookToFakeXHR } from '../../lib/books.db'
 import NewBookForm from '../NewBookForm/index.js'
 
