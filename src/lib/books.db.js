@@ -1,16 +1,19 @@
+
+
+
 const booksFromFakeDB = [{
     _id : 1,
-    title : 'Talion: The Revenant from DB',
+    title : 'Talion: The Revenant',
     author : 'Michael A. Stackpole'
   },
   {
     _id : 2,
-    title : 'Ready Player One from DB',
+    title : 'Ready Player One',
     author : 'Ernest Cline'
   },
   {
     _id : 3,
-    title : 'Enders Game from DB',
+    title : 'Enders Game',
     author : 'Orson Scott Card'
   }
 ];
