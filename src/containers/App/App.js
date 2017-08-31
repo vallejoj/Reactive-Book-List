@@ -2,26 +2,20 @@ import React, { Component } from 'react';
 import './App.css';
 import Book from '../../components/Book'
 import BookFilterInput from '../../components/BookFilterInput'
-
+import {connect} from 'react-redux'
 import {getBooksFromFakeXHR,addBookToFakeXHR } from '../../lib/books.db'
 import NewBookForm from '../NewBookForm/index.js'
-
+import {loadBooks} from '../../actions'
 class App extends Component {
-  constructor(){
-    super()
-    this.state={
-      books:[],
-      bookFilter : ''
-    }
-  }
 
-  componentDidMount(){
+
+  componentWillMount(){
     getBooksFromFakeXHR()
     .then((books)=>{
-      this.setState({
-        books: books
-      })
-      console.log(books)
+      this.props.loadBooks(books)
+    })
+    .catch((err)=>{
+      console.log(err)
     })
   }
 
@@ -48,10 +42,10 @@ handleFilterInputChange(e){
           <h1>Welcome to the Bookdome</h1>
               <BookFilterInput filterInputChange = {this.handleFilterInputChange.bind(this)}/>
         </div>
-          <NewBookForm addBook = {this.addBook.bind(this)}/>
+          <NewBookForm />
         <Book
-          filter= {this.state.bookFilter}
-        books={this.state.books}
+          filter= {this.props.bookFilter}
+        books={this.props.books}
       />
 
       </div>
@@ -59,4 +53,22 @@ handleFilterInputChange(e){
   }
 }
 
-export default App;
+const mapStateToProps = (state)=>{
+  return {
+    books:state.books
+  }
+}
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    loadBooks:(books)=>{
+      dispatch(loadBooks(books));
+    }
+  }
+}
+
+const ConnectedApp = connect (
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
+
+export default ConnectedApp;

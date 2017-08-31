@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux'
+import {getBooksFromFakeXHR} from '../../lib/books.db.js'
+import {addBook} from '../../actions';
 
 class NewBookForm extends Component{
     handleTitleChange(e){
@@ -15,16 +17,17 @@ class NewBookForm extends Component{
         bookAuthor: e.target.value
       })
     }
+  componentDidMount(){
+    console.log('NEWBOOK CONTAINER',this.props)
+  }
 
     handleBookSubmit(){
-  this.props.addBook ({
+let newBook = {
     title: this.state.bookTitle,
     author: this.state.bookAuthor
-  });
-  this.setState({
-    newTitle : '',
-    newAuthor : ''
-  })
+  }
+
+  this.props.addBook(newBook)
 }
 
   render(){
@@ -47,8 +50,18 @@ class NewBookForm extends Component{
               </div>
   )
 }
-
-
+}
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    addBook:(book)=>{
+      dispatch(addBook(book))
+    }
+  }
 }
 
-export default NewBookForm
+const connectedNewBookForm = connect(
+  null,
+  mapDispatchToProps
+)(NewBookForm)
+
+export default connectedNewBookForm
